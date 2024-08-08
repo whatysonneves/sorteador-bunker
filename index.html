@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="Exemplo de uma página HTML com Tailwind CSS" />
+	<title>Sorteador Bunker</title>
+	<meta name="robots" content="noindex, nofollow" />
+	<meta name="author" content="Whatyson Neves" />
+	<meta name="description" content="Sorteador Bunker - Ferramenta desenvolvida para facilitar os sorteios do Bunker do Bene." />
+	<link rel="icon" type="image/png" sizes="476x476" href="favicon.png" />
+	<script src="https://cdn.tailwindcss.com/3.4.5"></script>
+</head>
+<body class="items-center justify-center bg-gray-100 p-2 lg:p-4">
+
+	<div class="bg-gray-50 py-6 sm:py-12 rounded-3xl">
+		<div class="mx-auto max-w-7xl px-6 lg:px-8">
+			<div class="mx-auto max-w-2xl lg:text-center">
+				<h1 class="my-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Sorteador Bunker</h1>
+				<p class="mt-6 text-lg leading-8 text-gray-600">Ferramenta desenvolvida para facilitar os sorteios do Bunker do Bene.</p>
+			</div>
+			<div class="mx-auto mt-8 max-w-2xl sm:mt-20 lg:mt-12 lg:max-w-4xl" id="bunker_formulario">
+				<form class="space-y-4" id="bunker_formulario_sorteio">
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+						<div>
+							<label for="bunker_parceiros" class="block text-lg font-bold text-gray-700">Lista de Parceiros</label>
+							<textarea id="bunker_parceiros" name="bunker_parceiros" rows="14" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 resize-none p-1" placeholder="Lista de Parceiros"></textarea>
+						</div>
+						<div>
+							<label for="bunker_geral" class="block text-lg font-bold text-gray-700">Lista de Membros do Bunker</label>
+							<textarea id="bunker_geral" name="bunker_geral" rows="14" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 resize-none p-1" placeholder="Lista de Membros do Bunker"></textarea>
+						</div>
+						<div>
+							<label for="bunker_qnt_fundadores" class="block text-lg font-bold text-gray-700">Quantidade de Fundadores a Sortear</label>
+							<input type="number" min="1" max="100" step="1" id="bunker_qnt_fundadores" name="bunker_qnt_fundadores" class="mt-1 block w-full text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 p-1" placeholder="Quantidade de Fundadores a Sortear" />
+						</div>
+						<div>
+							<label for="bunker_qnt_engajados" class="block text-lg font-bold text-gray-700">Quantidade de Mais Engajados a Sortear</label>
+							<input type="number" min="1" max="100" step="1" id="bunker_qnt_engajados" name="bunker_qnt_engajados" class="mt-1 block w-full text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 p-1" placeholder="Quantidade de Mais Engajados a Sortear" />
+						</div>
+						<div>
+							<label for="bunker_fundadores" class="block text-lg font-bold text-gray-700">Lista de Fundadores</label>
+							<textarea id="bunker_fundadores" name="bunker_fundadores" rows="14" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 resize-none p-1" placeholder="Lista de Fundadores"></textarea>
+						</div>
+						<div>
+							<label for="bunker_engajados" class="block text-lg font-bold text-gray-700">Lista de Mais Engajados</label>
+							<textarea id="bunker_engajados" name="bunker_engajados" rows="14" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 resize-none p-1" placeholder="Lista de Mais Engajados"></textarea>
+						</div>
+					</div>
+					<div class="flex justify-end">
+						<button type="submit" class="block w-full px-4 py-2 bg-green-600 text-white text-lg rounded shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Sortear</button>
+					</div>
+				</form>
+			</div>
+			<div class="mx-auto mt-8 max-w-2xl sm:mt-20 lg:mt-12 lg:max-w-4xl text-center hidden" id="bunker_resultado_tabela">
+				<div class="overflow-x-auto">
+					<table class="min-w-full divide-y divide-gray-200" id="bunker_resultado_tabela_copiar">
+						<thead class="bg-gray-100">
+							<tr>
+								<th class="px-6 py-3 text-lg font-bold text-gray-900">#</th>
+								<th class="px-6 py-3 text-lg font-bold text-gray-900">Parceiro</th>
+								<th class="px-6 py-3 text-lg font-bold text-gray-900">Sorteado</th>
+								<th class="px-6 py-3 text-lg font-bold text-gray-900">Categoria</th>
+							</tr>
+						</thead>
+						<tbody class="bg-white divide-y divide-gray-200" id="bunker_resultado">
+						</tbody>
+					</table>
+				</div>
+				<button id="copiar_tabela" class="mt-4 block w-full px-4 py-2 bg-green-600 text-white text-lg rounded shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 hidden">Copiar Resultado</button>
+			</div>
+		</div>
+	</div>
+
+	<footer class="py-4">
+		<div class="text-end text-sm text-gray-500">
+			&copy; <span id="ano_atual">2024</span> <a href="https://whatysonneves.com/" target="_blank" class="text-gray-700">Whatyson Neves</a>.
+			Todos os direitos reservados.
+			Desenvolvido para o <a href="https://comunidade.bunkerdobene.com.br/" target="_blank" class="text-gray-700">Bunker do Bene</a>.
+		</div>
+	</footer>
+
+	<script>
+		const anoAtual = new Date().getFullYear();
+		document.getElementById("ano_atual").textContent = anoAtual;
+
+		function sanitizarTextarea(textarea_id) {
+			const textarea = document.getElementById(textarea_id);
+			const lines = textarea.value.split("\n").map(line => line.trim()).filter(line => line.length > 0);
+			return lines;
+		}
+
+		function embaralharArray(array) {
+			for (let i = array.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[array[i], array[j]] = [array[j], array[i]];
+			}
+		}
+
+		function sortear(lista, quantidade, excluir = []) {
+			const sorteados = [];
+			const listaCopy = lista.filter(item => !excluir.includes(item)); // função para não permitir repetidos
+
+			while (quantidade > 0 && listaCopy.length > 0) {
+				const index = Math.floor(Math.random() * listaCopy.length);
+				sorteados.push(...listaCopy.splice(index, 1));
+				quantidade--;
+			}
+
+			return sorteados;
+		}
+
+		function sleep(ms) {
+			return new Promise(resolve => setTimeout(resolve, ms));
+		}
+
+		async function preencherTabela(novoSorteio) {
+			const resultado = document.getElementById("bunker_resultado_tabela");
+			const formulario = document.getElementById("bunker_formulario");
+			const tbody = document.getElementById("bunker_resultado");
+			const botao = document.getElementById("copiar_tabela");
+			tbody.innerHTML = "";
+			resultado.classList.remove("hidden");
+			formulario.classList.add("hidden");
+
+			for (const [index, sorteio] of novoSorteio.entries()) {
+				const tr = document.createElement("tr");
+
+				const tdNumero = document.createElement("td");
+				tdNumero.className = "px-6 py-4 text-lg text-gray-900";
+				tdNumero.textContent = index + 1;
+
+				const tdParceiro = document.createElement("td");
+				tdParceiro.className = "px-6 py-4 text-lg text-gray-900";
+				tdParceiro.textContent = sorteio[0].parceiro;
+
+				const tdSorteado = document.createElement("td");
+				tdSorteado.className = "px-6 py-4 text-lg text-gray-900";
+				tdSorteado.textContent = sorteio[1].sorteado;
+
+				const tdCategoria = document.createElement("td");
+				tdCategoria.className = "px-6 py-4 text-lg text-gray-900";
+				tdCategoria.textContent = sorteio[2].categoria;
+
+				tr.appendChild(tdNumero);
+				tr.appendChild(tdParceiro);
+				tr.appendChild(tdSorteado);
+				tr.appendChild(tdCategoria);
+				tbody.appendChild(tr);
+				await sleep(300);
+			};
+
+			botao.classList.remove("hidden");
+		}
+
+		document.getElementById("bunker_formulario_sorteio").addEventListener("submit", function(event) {
+			event.preventDefault();
+
+			const parceiros = sanitizarTextarea("bunker_parceiros");
+			const geral = sanitizarTextarea("bunker_geral");
+			const fundadores = sanitizarTextarea("bunker_fundadores");
+			const engajados = sanitizarTextarea("bunker_engajados");
+			const qntFundadores = parseInt(document.getElementById("bunker_qnt_fundadores").value, 10);
+			const qntEngajados = parseInt(document.getElementById("bunker_qnt_engajados").value, 10);
+			const qntGeral = (parceiros.length - (qntFundadores + qntEngajados));
+
+			// realizar sorteios
+			let engajadosSorteados = sortear(engajados, qntEngajados);
+			let fundadoresSorteados = sortear(fundadores, qntFundadores, engajadosSorteados);
+			let geralSorteados = sortear(geral, qntGeral, [...engajadosSorteados, ...fundadoresSorteados]);
+
+			embaralharArray(parceiros);
+
+			const resultadoMisturado = [...engajadosSorteados, ...fundadoresSorteados, ...geralSorteados].map((email, index) => ({
+				id: index + 1,
+				nome: email,
+				categoria: index < engajadosSorteados.length ? "Mais Engajado" : index < engajadosSorteados.length + fundadoresSorteados.length ? "Membro Fundador" : "Membro"
+			}));
+
+			const novoSorteio = parceiros.map((parceiro, index) => [
+				{ parceiro: parceiro },
+				{ sorteado: resultadoMisturado[index] ? resultadoMisturado[index].nome : null },
+				{ categoria: resultadoMisturado[index] ? resultadoMisturado[index].categoria : null },
+			]);
+
+			embaralharArray(novoSorteio);
+			preencherTabela(novoSorteio);
+		});
+
+		document.getElementById("copiar_tabela").addEventListener("click", function() {
+			const tabela = document.getElementById("bunker_resultado_tabela_copiar");
+			const range = document.createRange();
+			range.selectNode(tabela);
+			const selection = window.getSelection();
+			selection.removeAllRanges();
+			selection.addRange(range);
+
+			try {
+				document.execCommand("copy");
+				alert("Tabela copiada para a área de transferência!");
+			} catch (err) {
+				alert("Erro ao copiar a tabela.");
+			}
+
+			selection.removeAllRanges();
+		});
+	</script>
+
+</body>
+</html>
